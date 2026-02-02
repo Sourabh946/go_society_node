@@ -1,0 +1,39 @@
+Phase 1
+--------
+
+Focus on:
+ - Clean folder structure
+ - Config management
+ - Environment handling
+ - JWT authentication
+ - Role-based middleware
+ - Proper DB migrations
+
+
+Phase 2 – Visitor State Machine (2–3 weeks)
+==============================================
+This is where you grow.
+
+Implement:
+ - Strict state transitions
+ - Authorization checks
+ - Illegal transition prevention
+ - Audit logging
+ - Background expiry job
+ - This is backend maturity.
+
+Most developers never build a proper state machine.
+
+
+======================================
+Stack Recommende
+=======================================
+
+Language    : Go
+Framework   : Gin
+ORM         : GORM
+DB          : MySQL
+Auth        : JWT
+Migration   : golang-migrate
+Logging     : Zap or Logrus
+Testing     : Go built-in testing

@@ -1,0 +1,62 @@
+/cmd or index.js
+/controllers
+/services
+/repositories
+/models
+/middleware
+/routes
+/utils
+
+=====================================
+
+go_society_node/
+society-management/
+│
+├── app/
+│   ├── Controllers/
+│   │   ├── AuthController.go
+│   │   ├── SocietyController.go
+│   │   ├── BuildingController.go
+│   │   └── FlatController.go
+│   │
+│   ├── Services/
+│   │   ├── AuthService.go
+│   │   ├── SocietyService.go
+│   │   ├── BuildingService.go
+│   │   └── FlatService.go
+│   │
+│   ├── Repositories/
+│   │   ├── UserRepository.go
+│   │   ├── SocietyRepository.go
+│   │   ├── BuildingRepository.go
+│   │   └── FlatRepository.go
+│   │
+│   ├── Models/
+│   │   ├── User.go
+│   │   ├── Society.go
+│   │   ├── Building.go
+│   │   └── Flat.go
+│   │
+│   ├── Middleware/
+│   │   ├── AuthMiddleware.go
+│   │   └── RBACMiddleware.go
+│   │
+│   └── Helpers/
+│       ├── JwtHelper.go
+│       └── ResponseHelper.go
+│
+├── config/
+│   └── database.go
+│
+├── database/
+│   └── migrations/
+│
+├── routes/
+│   └── routes.go
+│
+├── bootstrap/
+│   └── app.go
+│
+├── main.go
+├── go.mod
+└── README.md

@@ -1,0 +1,46 @@
+=========================================
+*******  Phase 1 – Core Foundation ******
+=========================================
+Focus: Basic society structure + authentication
+Features:
+ -  Admin Registration / Login (JWT)
+ -  Society Creation
+ -  Building & Wing Creation
+ -  Flat Creation
+ -  Member Creation
+ -  Role-based Access (Admin / Member)
+
+
+ Learning Focus:
+ ---------------
+ - Struct design
+ - Routing
+ - Middleware pattern
+ - Dependency injection basics
+ - Clean error handling
+
+
+=========================================
+** Phase 2 – Visitor & Approval System **
+=========================================
+
+This connects directly to your real work.
+Features:
+ - Add Visitor
+ - Pending Approval for Member
+ - Approve / Reject Visitor
+ - Visitor Log
+ - Webhook simulation (optional advanced)
+
+
+Concepts You’ll Learn:
+ - State management (Pending → Approved → Rejected)
+ - Notifications logic
+ - Cron job to expire visitor pass
+ - Background jobs
+
+In Go:
+------
+ - Goroutines
+ - Channels
+ - Context timeout
