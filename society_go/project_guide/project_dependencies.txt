@@ -1,0 +1,88 @@
+// ==========================================================
+// Project Dependencies Documentation (Go Backend)
+// ==========================================================
+
+// ----------------------------------------------------------
+// github.com/gin-gonic/gin
+// ----------------------------------------------------------
+// Web framework for building REST APIs.
+//
+// Used for:
+// - Creating HTTP server
+// - Defining routes (GET, POST, PUT, DELETE)
+// - Handling requests and sending JSON responses
+// - Middleware support (auth, logging, CORS)
+// - Request binding and validation
+//
+// Similar to: Laravel routing + controller layer
+// ----------------------------------------------------------
+
+
+// ----------------------------------------------------------
+// gorm.io/gorm
+// ----------------------------------------------------------
+// ORM (Object Relational Mapper) for database operations.
+//
+// Used for:
+// - Connecting Go structs with database tables
+// - CRUD operations (Create, Read, Update, Delete)
+// - Auto migrations
+// - Handling relationships
+// - Query building
+//
+// Similar to: Laravel Eloquent ORM
+// ----------------------------------------------------------
+
+
+// ----------------------------------------------------------
+// gorm.io/driver/mysql
+// ----------------------------------------------------------
+// MySQL driver for GORM.
+//
+// Used for:
+// - Connecting GORM to MySQL database
+// - Managing DB connection configuration
+//
+// Required so GORM can communicate with MySQL
+// ----------------------------------------------------------
+
+
+// ----------------------------------------------------------
+// github.com/joho/godotenv
+// ----------------------------------------------------------
+// Loads environment variables from .env file.
+//
+// Used for:
+// - Storing DB credentials
+// - Storing JWT secrets
+// - Managing environment-based configuration
+//
+// Prevents hardcoding sensitive data in source code
+// ----------------------------------------------------------
+
+
+// ----------------------------------------------------------
+// github.com/golang-jwt/jwt/v5
+// ----------------------------------------------------------
+// JWT (JSON Web Token) library for authentication.
+//
+// Used for:
+// - Generating JWT tokens on login
+// - Validating tokens for protected routes
+// - Extracting user data from token claims
+//
+// Enables stateless authentication system
+// ----------------------------------------------------------
+
+
+// ----------------------------------------------------------
+// golang.org/x/crypto/bcrypt
+// ----------------------------------------------------------
+// Cryptography library for password hashing.
+//
+// Used for:
+// - Hashing passwords before storing in database
+// - Comparing hashed password during login
+//
+// Ensures passwords are never stored as plain text
+// ----------------------------------------------------------
