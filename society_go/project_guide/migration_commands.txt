@@ -1,0 +1,6 @@
+// Create table migration script
+migrate -path database/migrations -database "mysql://root:@tcp(127.0.0.1:3306)/go_society_node" up
+
+
+// drop all the tables
+migrate -path database/migrations -database "mysql://root:@tcp(127.0.0.1:3306)/go_society_node" drop -f
