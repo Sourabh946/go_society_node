@@ -15,7 +15,10 @@ module.exports = {
         primaryKey: true,
         autoIncrement: true
       },
-      flat_number: Sequelize.STRING,
+      flat_number: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
       building_id: {
         type: Sequelize.INTEGER,
         references: {
@@ -37,6 +40,15 @@ module.exports = {
         allowNull: true
       }
     });
+
+    await queryInterface.addIndex(
+      'flats',
+      ['building_id', 'flat_number'],
+      {
+        unique: true,
+        name: 'uq_building_flat'
+      }
+    );
   },
 
   async down(queryInterface, Sequelize) {

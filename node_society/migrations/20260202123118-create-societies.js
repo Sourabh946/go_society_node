@@ -12,10 +12,15 @@ module.exports = {
     await queryInterface.createTable('societies', {
       id: {
         type: Sequelize.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        primaryKey: true
       },
-      name: Sequelize.STRING,
+
+      name: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true // ✅ DB-level UNIQUE
+      },
       address: Sequelize.TEXT,
       createdAt: {
         allowNull: false,
@@ -30,6 +35,25 @@ module.exports = {
         allowNull: true
       }
     });
+
+    // ✅ Explicit index (recommended even with UNIQUE)
+    await queryInterface.addIndex(
+      'societies',
+      ['name'],
+      {
+        name: 'idx_societies_name',
+        unique: true
+      }
+    );
+
+    await queryInterface.addIndex(
+      'societies',
+      ['registration_no', 'deleted_at'],
+      {
+        unique: true,
+        name: 'uq_society_reg_no_active'
+      }
+    );
   },
 
   async down(queryInterface, Sequelize) {
