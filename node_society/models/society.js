@@ -12,9 +12,13 @@ module.exports = (sequelize, DataTypes) => {
         }
     );
 
-    Society.associate = models => {
-        Society.hasMany(models.Building, { foreignKey: 'society_id' });
-    };
+    Society.associate = (models) => {
+        Society.hasMany(models.Building, {
+            foreignKey: 'society_id',
+            as: 'buildings',
+            onDelete: 'RESTRICT'
+        })
+    }
 
     return Society;
 };

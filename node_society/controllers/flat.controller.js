@@ -1,4 +1,4 @@
-const { Flat, Building } = require('../models');
+const { Flat, Building, Society } = require('../models');
 
 exports.create = async (req, res) => {
     try {
@@ -14,7 +14,21 @@ exports.create = async (req, res) => {
 
 exports.getAll = async (req, res) => {
     try {
-        const flats = await Flat.findAll({ include: Building });
+        const flats = await Flat.findAll({
+            include: [
+                {
+                    model: Building,
+                    as: "building",
+                    include: [
+                        {
+                            model: Society,
+                            as: "society",
+                            attributes: ["id", "name"]
+                        }
+                    ]
+                }
+            ]
+        });
         res.json(flats);
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -23,7 +37,19 @@ exports.getAll = async (req, res) => {
 
 exports.getById = async (req, res) => {
     try {
-        const flat = await Flat.findByPk(req.params.id, { include: Building });
+        const flat = await Flat.findByPk(req.params.id,
+            {
+                include: [{
+                    model: Building,
+                    as: "building",
+                    include: [{
+                        model: Society,
+                        as: "society",
+                        attributes: ["id", "name"]
+                    }]
+                }]
+            }
+        );
         if (!flat) return res.status(404).json({ message: 'Not found' });
         res.json(flat);
     } catch (err) {

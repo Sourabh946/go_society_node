@@ -12,10 +12,18 @@ module.exports = (sequelize, DataTypes) => {
         }
     );
 
-    Building.associate = models => {
-        Building.belongsTo(models.Society, { foreignKey: 'society_id' });
-        Building.hasMany(models.Flat, { foreignKey: 'building_id' });
-    };
+    Building.associate = (models) => {
+        Building.belongsTo(models.Society, {
+            foreignKey: 'society_id',
+            as: 'society'
+        })
+
+        Building.hasMany(models.Flat, {
+            foreignKey: 'building_id',
+            as: 'flats',
+            onDelete: 'RESTRICT'
+        })
+    }
 
     return Building;
 };

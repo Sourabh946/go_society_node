@@ -56,3 +56,30 @@ exports.remove = async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 };
+
+exports.index = async (req, res) => {
+  try {
+    const where = {}
+
+    if (req.query.society_id) {
+      where.society_id = req.query.society_id
+    }
+
+    const buildings = await Building.findAll({
+      where,
+      include: [
+        {
+          model: Society,
+          as: 'society',   // 🔥 REQUIRED
+          attributes: ['id', 'name']
+        }
+      ],
+      order: [['name', 'ASC']]
+    })
+
+    res.json(buildings)
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ error: err.message })
+  }
+}

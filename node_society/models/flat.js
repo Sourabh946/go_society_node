@@ -12,10 +12,12 @@ module.exports = (sequelize, DataTypes) => {
         }
     );
 
-    Flat.associate = models => {
-        Flat.belongsTo(models.Building, { foreignKey: 'building_id' });
-        Flat.hasMany(models.Member, { foreignKey: 'flat_id' });
-    };
+    Flat.associate = (models) => {
+        Flat.belongsTo(models.Building, {
+            foreignKey: 'building_id',
+            as: 'building'
+        })
+    }
 
     return Flat;
 };

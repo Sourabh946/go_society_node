@@ -35,7 +35,12 @@ exports.login = async (req, res) => {
 
         const user = await User.findOne({
             where: { email },
-            include: Role
+            include: [
+                {
+                    model: Role,
+                    as: 'role'
+                }
+            ]
         });
 
         if (!user) {
@@ -49,7 +54,7 @@ exports.login = async (req, res) => {
 
         const token = generateToken({
             id: user.id,
-            role: user.Role.name
+            role: user.role.name
         });
 
         return res.json({
@@ -58,7 +63,7 @@ exports.login = async (req, res) => {
                 id: user.id,
                 name: user.name,
                 email: user.email,
-                role: user.Role.name
+                role: user.role.name
             }
         });
     } catch (err) {

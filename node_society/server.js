@@ -1,9 +1,17 @@
 require('dotenv').config({ quiet: true });
 const express = require("express");
+const cors = require("cors");
+
 const app = express();
-const { User, Role } = require('./models');
+
+// const { User, Role } = require('./models');
 const auth = require('./middlewares/auth.middleware');
 const role = require('./middlewares/role.middleware');
+
+app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true
+}));
 
 app.use(express.json());
 app.use(express.static("public"));

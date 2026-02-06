@@ -41,7 +41,16 @@ exports.getById = async (req, res) => {
     try {
         const user = await User.findByPk(req.params.id, {
             attributes: { exclude: ['password'] },
-            include: [Role, Member]
+            include: [
+                {
+                    model: Role,
+                    as: 'role'
+                },
+                {
+                    model: Society,
+                    as: 'society'
+                }
+            ]
         });
 
         if (!user) return res.status(404).json({ message: 'User not found' });

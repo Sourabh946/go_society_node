@@ -1,5 +1,5 @@
 module.exports = (...roles) => (req, res, next) => {
-    const roleName = req.user?.Role?.name;
+    const roleName = req.user?.role?.name;
 
     if (!roleName) {
         return res.status(401).json({ message: "Unauthorized" });
