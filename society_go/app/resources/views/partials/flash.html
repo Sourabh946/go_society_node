@@ -1,0 +1,13 @@
+{{ define "flash" }}
+{{ if .success }}
+    <div style="color:green;">
+        {{ .success }}
+    </div>
+{{ end }}
+
+{{ if .error }}
+    <div style="color:red;">
+        {{ .error }}
+    </div>
+{{ end }}
+{{ end }}

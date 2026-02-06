@@ -1,4 +1,4 @@
-package services
+package Services
 
 import (
 	"errors"
@@ -23,15 +23,15 @@ func Register(name, email, password string) error {
 	return repositories.CreateUser(user)
 }
 
-func Login(email, password string) (string, error) {
+func Login(email, password string) (*models.User, string, error) {
 	user, err := repositories.GetUserByEmail(email)
 	if err != nil {
-		return "", errors.New("invalid credentials")
+		return nil, "", errors.New("invalid credentials")
 	}
 
 	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
 	if err != nil {
-		return "", errors.New("invalid credentials")
+		return nil, "", errors.New("invalid credentials")
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
@@ -41,7 +41,7 @@ func Login(email, password string) (string, error) {
 
 	tokenString, err := token.SignedString([]byte(os.Getenv("JWT_SECRET")))
 	if err != nil {
-		return "", err
+		return nil, "", err
 	}
-	return tokenString, nil
+	return user, tokenString, nil
 }

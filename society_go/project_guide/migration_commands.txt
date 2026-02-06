@@ -1,4 +1,24 @@
-// Create table migration script
+package needed for migration
+================================
+go install -tags 'mysql' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
+
+
+to check migrate verions
+============================
+migrate -version
+
+
+Create migrations folder
+===========================
+database/migrations
+
+
+Create Migration File
+=========================
+migrate create -ext sql -dir database/migrations create_society_tables
+
+
+// Run Migration
 migrate -path database/migrations -database "mysql://root:@tcp(127.0.0.1:3306)/go_society_node" up
 
 
