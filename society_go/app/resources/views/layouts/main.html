@@ -1,0 +1,52 @@
+{{ define "layout" }}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ .title }}</title>
+
+        {{ template "styles" . }}
+        
+</head>
+<body class="layout-fixed sidebar-expand-lg sidebar-open bg-body-tertiary">
+   
+    <div class="app-wrapper">
+        {{ template "header" . }}
+        
+        <!--begin::Sidebar-->
+        <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
+        
+        {{ if .session_data.Roles }}
+            <div class="d-flex flex-wrap gap-2">
+                {{ range .session_data.Roles }}
+                    {{ if eq .RoleID 1 }}
+                        {{ template "admin_sidebar" . }}
+                    {{ end }}
+
+                    {{ if eq .RoleID 2 }}
+                        {{ template "sidebar" . }}
+                    {{ end }}
+                {{ end }}
+            </div>
+        {{ end }}
+        
+            
+        </aside>
+        <!--end::Sidebar-->
+    
+        {{ template "flash" . }}
+
+        {{ if eq .Page "pages/dashboard" }}
+            {{ template "pages/dashboard" . }}
+        {{ else if eq .Page "pages/community_add" }}
+            {{ template "pages/community_add" . }}
+        {{ end }}
+
+    </div>
+    {{ template "scripts" . }}
+    {{ template "footer" . }}
+
+   
+
+</body>
+</html>
+{{ end }}
