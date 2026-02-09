@@ -1,93 +1,43 @@
+require('dotenv').config({ quiet: true });
 const express = require("express");
+const cors = require("cors");
+
 const app = express();
+
+// const { User, Role } = require('./models');
+const auth = require('./middlewares/auth.middleware');
+const role = require('./middlewares/role.middleware');
+
+app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true
+}));
 
 app.use(express.json());
 app.use(express.static("public"));
 
-/***********************
- * Closure: ID Generator
- ***********************/
-function createId() {
-  let id = 0;
-  return () => ++id;
-}
-const generateId = createId();
+app.use('/api/auth', require('./routes/auth.routes'));
+app.use('/api/societies', require('./routes/society.routes'));
+app.use('/api/buildings', require('./routes/building.routes'));
+app.use('/api/flats', require('./routes/flat.routes'));
+app.use('/api/members', require('./routes/member.routes'));
+app.use('/api/users', require('./routes/user.routes'));
 
-/***********************
- * In-memory data
- ***********************/
-let members = [];
+app.use(require('./middlewares/error.middleware'));
 
-/***********************
- * Add Member (Callback)
- ***********************/
-function addMember(name, flat, callback) {
-  const member = {
-    id: generateId(),
-    name,
-    flat,
-    maintenance: 0
-  };
-  members.push(member);
-  callback(member);
-}
-
-app.post("/add-member", (req, res) => {
-  const { name, flat } = req.body;
-
-  addMember(name, flat, (member) => {
-    res.json(member);
-  });
+app.get('/', (req, res) => {
+    res.send('Society Maintenance API running');
 });
 
-/***********************
- * Get Members (Promise)
- ***********************/
-function getMembers() {
-  return new Promise(resolve => {
-    setTimeout(() => resolve(members), 500);
-  });
-}
+app.get('/api/admin/dashboard',
+    auth,
+    role('admin'),
+    (req, res) => {
+        res.json({ message: 'Welcome Admin' });
+    }
+);
 
-app.get("/members", async (req, res) => {
-  const data = await getMembers();
-  res.json(data);
-});
 
-/***********************
- * Add Maintenance
- ***********************/
-app.post("/add-maintenance", async (req, res) => {
-  const { id, amount } = req.body;
-
-  const member = members.find(m => m.id === id);
-  if (!member) return res.status(404).json({ message: "Member not found" });
-
-  member.maintenance += amount;
-  res.json(member);
-});
-
-/***********************
- * Total Collection
- ***********************/
-app.get("/total", (req, res) => {
-  const total = members.reduce((sum, m) => sum + m.maintenance, 0);
-  res.json({ total });
-});
-
-/***********************
- * Event Loop Demo
- ***********************/
-console.log("Server Start");
-
-setTimeout(() => console.log("setTimeout executed"), 0);
-Promise.resolve().then(() => console.log("Promise executed"));
-
-console.log("Server End");
-
-/***********************
- * Server
- ***********************/
-app.listen(3000, () => {
-  console.log("Server running on http://localhost:3000");
+app.listen(process.env.PORT, () => {
+    console.log(`Server running on port ${process.env.PORT}`);
 });

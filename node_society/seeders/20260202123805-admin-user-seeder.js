@@ -20,7 +20,7 @@ module.exports = {
       {
         id: 1,
         name: 'Super Admin',
-        email: 'admin@society.com',
+        email: 'admin@super.com',
         password,
         role_id: 1, // admin
         createdAt: new Date(),
