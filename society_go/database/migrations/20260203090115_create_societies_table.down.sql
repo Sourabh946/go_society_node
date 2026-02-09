@@ -1,1 +1,1 @@
-DROP TABLE IF EXISTS societies;
+DROP TABLE IF EXISTS society;

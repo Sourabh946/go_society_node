@@ -15,13 +15,14 @@
                 <!-- Main content -->
   <section class="content">
     <div class="container-fluid">
-
+      <button class="btn btn-secondary mb-3" onclick="window.history.back()">Back</button>
+      <button class="btn btn-primary mb-3" onclick="window.location.href='/community/view'">View Communities</button>
       <div class="card card-primary">
         <div class="card-header">
           <h3 class="card-title">{{ .title }}</h3>
         </div>
 
-        <form action="/communities/store" method="POST">
+        <form action="{{ baseURL }}/community/create" method="POST">
           <div class="card-body">
 
             <!-- Community Name -->
@@ -70,8 +71,8 @@
             <div class="form-group mb-3">
               <label>Status</label>
               <select name="status" class="form-control">
-                <option value="active">Active</option>
-                <option value="inactive">Inactive</option>
+                <option value="1">Active</option>
+                <option value="0">Inactive</option>
               </select>
             </div>
 

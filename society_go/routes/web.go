@@ -24,6 +24,9 @@ func SetupWebRoutes(r *gin.Engine) {
 	comm := r.Group("/community")
 	{
 		comm.GET("/add_details", middleware.AuthRequired(), controllers.ShowCommunityAddDetailPage)
+		comm.POST("/create", middleware.AuthRequired(), controllers.CreateCommunity)
+		comm.GET("/view", middleware.AuthRequired(), controllers.ShowCommunityListing)
+		comm.GET("/view/:id", middleware.AuthRequired(), controllers.ShowCommunityAddDetailPage)
 	}
 
 }

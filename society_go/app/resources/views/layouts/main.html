@@ -39,6 +39,8 @@
             {{ template "pages/dashboard" . }}
         {{ else if eq .Page "pages/community_add" }}
             {{ template "pages/community_add" . }}
+        {{ else if eq .Page "pages/community_listing" }}
+            {{ template "pages/community_listing" . }}
         {{ end }}
 
     </div>
