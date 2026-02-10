@@ -22,58 +22,75 @@
           <h3 class="card-title">{{ .title }}</h3>
         </div>
 
-        <form action="{{ baseURL }}/community/create" method="POST">
+        <!-- <form action="{{ baseURL }}/community/create" method="POST"> -->
+        <form action="{{ .form_action }}" method="POST">
+
           <div class="card-body">
 
             <!-- Community Name -->
             <div class="form-group mb-3">
               <label>Community Name</label>
-              <input type="text" name="name" class="form-control" placeholder="Enter community name" required>
+              <input type="text" name="name" class="form-control"
+              placeholder="Enter community name"
+              value="{{ if .session_data.User_default_community }}{{ .session_data.User_default_community }}{{ end }}"
+              required readonly>
+
             </div>
 
             <!-- Address -->
             <div class="form-group mb-3">
               <label>Address</label>
-              <textarea name="address" class="form-control" rows="3" placeholder="Enter address"></textarea>
+              <textarea name="address" class="form-control" rows="3">{{ if .community }}{{ .community.Address }}{{ end }}</textarea>
+
             </div>
 
             <!-- City -->
             <div class="form-group mb-3">
               <label>City</label>
-              <input type="text" name="city" class="form-control" placeholder="Enter city">
+             <input type="text" name="city" class="form-control"
+       value="{{ if .community }}{{ .community.City }}{{ end }}">
+
             </div>
 
             <!-- State -->
             <div class="form-group mb-3">
               <label>State</label>
-              <input type="text" name="state" class="form-control" placeholder="Enter state">
+              <input type="text" name="state" class="form-control" placeholder="Enter state" value = "{{ if .community }}{{ .community.State }}{{ end }}" >
             </div>
 
             <!-- Pincode -->
             <div class="form-group mb-3">
               <label>Pincode</label>
-              <input type="text" name="pincode" class="form-control" placeholder="Enter pincode">
+             <input type="text" name="pincode" class="form-control"
+       value="{{ if .community }}{{ .community.PinCode }}{{ end }}">
             </div>
 
             <!-- Total Blocks -->
             <div class="form-group mb-3">
               <label>Total Blocks</label>
-              <input type="number" name="total_blocks" class="form-control" placeholder="Enter total blocks">
+              <input type="number" name="total_blocks" class="form-control" placeholder="Enter total blocks" value ="{{ if .community }}{{ .community.TotalBlocks }}{{ end }}" >
             </div>
 
             <!-- Total Flats -->
             <div class="form-group mb-3">
               <label>Total Flats</label>
-              <input type="number" name="total_flats" class="form-control" placeholder="Enter total flats">
+              <input type="number" name="total_flats" class="form-control" placeholder="Enter total flats" value ="{{ if .community }}{{ .community.TotalFlats }}{{ end }}" >
             </div>
 
             <!-- Status -->
             <div class="form-group mb-3">
               <label>Status</label>
               <select name="status" class="form-control">
-                <option value="1">Active</option>
-                <option value="0">Inactive</option>
-              </select>
+              <option value="1"
+                  {{ if and .community (eq .community.Status 1) }}selected{{ end }}>
+                  Active
+              </option>
+              <option value="0"
+                  {{ if and .community (eq .community.Status 0) }}selected{{ end }}>
+                  Inactive
+              </option>
+          </select>
+
             </div>
 
           </div>

@@ -87,6 +87,13 @@
                         <p class="mb-0 fw-semibold">{{ .session_data.LoginTime }}</p>
                     </div>
                 </li>
+                <li class="list-group-item d-flex align-items-center">
+                    <i class="bi bi-building me-3 text-primary"></i>
+                    <div>
+                        <small class="text-muted">Default Community</small>
+                        <p class="mb-0 fw-semibold">{{ .session_data.User_default_community }} ({{ .session_data.User_default_community_Id  }})</p>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>

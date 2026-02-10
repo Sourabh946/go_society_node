@@ -5,6 +5,7 @@ import (
 	"os"
 	"text/template"
 
+	helpers "go_society_node/society_go/app/Helpers"
 	middleware "go_society_node/society_go/app/Middleware"
 	"go_society_node/society_go/config" // Add this
 	"go_society_node/society_go/routes"
@@ -39,7 +40,8 @@ func main() {
 	})
 
 	// Load HTML templates
-	r.LoadHTMLGlob("app/resources/views/**/*.html")
+	// r.LoadHTMLGlob("app/resources/views/**/*.html")
+	helpers.LoadTemplates(r)
 
 	// Serve static assets (CSS/JS/images) referenced by templates
 	r.Static("/css", "./app/resources/css")

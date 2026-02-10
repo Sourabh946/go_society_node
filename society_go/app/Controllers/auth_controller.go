@@ -90,7 +90,7 @@ func Login(c *gin.Context) {
 	session.Set("user_id", user.ID)
 	session.Set("user_name", user.Name)
 	session.Set("user_email", user.Email)
-	session.Set("current_role_id", '1')
+	// session.Set("current_role_id", '1')
 
 	// Try to fetch user role information from repository and store in session
 	userWithRole, repoErr := Repositories.GetUserWithRole(user.Email)
@@ -105,6 +105,14 @@ func Login(c *gin.Context) {
 		// Store all roles as JSON in session
 		rolesJson, _ := json.Marshal(userWithRole.Roles)
 		session.Set("user_roles", string(rolesJson))
+	}
+
+	userDefaultCommunity, err := Repositories.GetUserDefaultCommunity(user.ID)
+	if err != nil {
+		log.Printf("Error fetching user default community: %v\n", err)
+	} else {
+		session.Set("user_default_community", userDefaultCommunity.Name)
+		session.Set("user_default_community_id", userDefaultCommunity.ID)
 	}
 
 	err = session.Save()

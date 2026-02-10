@@ -41,3 +41,9 @@ func GetUserWithRole(email string) (*models.User, error) {
 	user.Roles = roles
 	return &user, nil
 }
+
+func UpdateUserDefaultCommunity(userID uint, communityID uint) error {
+	return config.DB.Model(&models.User{}).
+		Where("id = ?", userID).
+		Update("default_community_id", communityID).Error
+}

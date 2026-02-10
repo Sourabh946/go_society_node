@@ -1,0 +1,85 @@
+{{ define "pages/community/block_unit_add" }}
+
+<main class="app-main">
+    <!--begin::App Content Header-->
+    <div class="app-content-header">
+        <div class="container-fluid">
+            <div class="row">
+                <h4></h4>
+                <hr />
+
+                <!-- Main content -->
+                <section class="content">
+                    <div class="container-fluid">
+
+                        <button class="btn btn-secondary mb-3" onclick="window.history.back()">Back</button>
+                        <button class="btn btn-primary mb-3" onclick="window.location.href='{{ baseURL }}/community/block_unit/view'">
+                            View Block & Units
+                        </button>
+
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">{{ .title }}</h3>
+                            </div>
+
+                            <form method="POST" action="{{ .form_action }}">
+
+                                <div class="card-body">
+
+                                    <!-- Select Community -->
+                                    <div class="form-group mb-3">
+                                        <label>Select Community</label>
+                                        <select class="form-control" name="society_id" required>
+                                            <option value="" disabled selected>Select a community</option>
+                                            {{ range .Communities }}
+                                                <option value="{{ .ID }}">
+                                                    {{ .Name }}
+                                                </option>
+                                            {{ end }}
+                                        </select>
+                                    </div>
+
+                                    <!-- Block Name -->
+                                    <div class="form-group mb-3">
+                                        <label>Block Name</label>
+                                        <input type="text"
+                                               name="block_name"
+                                               class="form-control"
+                                               placeholder="Enter block name"
+                                               required>
+                                    </div>
+
+                                    <!-- Unit Name -->
+                                    <div class="form-group mb-3">
+                                        <label>Unit Name</label>
+                                        <input type="text"
+                                               name="unit_name"
+                                               class="form-control"
+                                               placeholder="Enter unit name"
+                                               required>
+                                    </div>
+
+                                </div>
+
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-primary">
+                                        Save Block & Unit
+                                    </button>
+                                    <a href="{{ baseURL }}/community/block_unit/view" class="btn btn-secondary">
+                                        Cancel
+                                    </a>
+                                </div>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </div>
+</main>
+
+{{ end }}

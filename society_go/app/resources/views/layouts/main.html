@@ -15,19 +15,7 @@
         <!--begin::Sidebar-->
         <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
         
-        {{ if .session_data.Roles }}
-            <div class="d-flex flex-wrap gap-2">
-                {{ range .session_data.Roles }}
-                    {{ if eq .RoleID 1 }}
-                        {{ template "admin_sidebar" . }}
-                    {{ end }}
-
-                    {{ if eq .RoleID 2 }}
-                        {{ template "sidebar" . }}
-                    {{ end }}
-                {{ end }}
-            </div>
-        {{ end }}
+      {{ template "sidebar" . }}
         
             
         </aside>
@@ -41,6 +29,10 @@
             {{ template "pages/community_add" . }}
         {{ else if eq .Page "pages/community_listing" }}
             {{ template "pages/community_listing" . }}
+        {{ else if eq .Page "pages/users/user_profile_add" }}
+            {{ template "pages/users/user_profile_add" . }}
+        {{ else if eq .Page "pages/community/block_unit_add" }}
+            {{ template "pages/community/block_unit_add" . }}
         {{ end }}
 
     </div>

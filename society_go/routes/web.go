@@ -25,8 +25,28 @@ func SetupWebRoutes(r *gin.Engine) {
 	{
 		comm.GET("/add_details", middleware.AuthRequired(), controllers.ShowCommunityAddDetailPage)
 		comm.POST("/create", middleware.AuthRequired(), controllers.CreateCommunity)
+
+		comm.GET("/edit/:id", middleware.AuthRequired(), controllers.ShowCommunityAddDetailPage)
+		comm.POST("/update/:id", middleware.AuthRequired(), controllers.UpdateCommunity)
+
 		comm.GET("/view", middleware.AuthRequired(), controllers.ShowCommunityListing)
-		comm.GET("/view/:id", middleware.AuthRequired(), controllers.ShowCommunityAddDetailPage)
+
+		comm.GET("/switch/:id", middleware.AuthRequired(), controllers.SwitchCommunity)
+
+		comm.GET("/add_block_unit", middleware.AuthRequired(), controllers.ShowBlockUnitAddPage)
+		comm.POST("/create_block_unit", middleware.AuthRequired(), controllers.CreateBlockUnit)
+	}
+
+	user := r.Group("/user")
+	{
+		user.GET("/add", middleware.AuthRequired(), controllers.ShowUserAddPage)
+		// user.POST("/create", middleware.AuthRequired(), controllers.CreateUser)
+
+		// user.GET("/edit/:id", middleware.AuthRequired(), controllers.ShowUserAddPage)
+		// user.POST("/update/:id", middleware.AuthRequired(), controllers.UpdateUser)
+
+		// user.GET("/view", middleware.AuthRequired(), controllers.ShowUserListing)
+
 	}
 
 }

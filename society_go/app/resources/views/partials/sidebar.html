@@ -1,214 +1,66 @@
 {{ define "sidebar" }}
-  <div class="sidebar-brand">
-          <!--begin::Brand Link-->
-          <a href="./index.html" class="brand-link">
-            <!--begin::Brand Image-->
-            <img
-              src="./assets/img/AdminLTELogo.png"
-              alt="Admin"
-              class="brand-image opacity-75 shadow"
-            />
-            <!--end::Brand Image-->
-            <!--begin::Brand Text-->
-            <!-- <span class="brand-text fw-light">Admin</span> -->
-            <!--end::Brand Text-->
-          </a>
-          <!--end::Brand Link-->
-        </div>
-        <!--end::Sidebar Brand-->
-        <!--begin::Sidebar Wrapper-->
-        <div class="sidebar-wrapper">
-          <nav class="mt-2">
-            <!--begin::Sidebar Menu-->
-            <ul
-              class="nav sidebar-menu flex-column"
-              data-lte-toggle="treeview"
-              role="navigation"
-              aria-label="Main navigation"
-              data-accordion="false"
-              id="navigation"
-            >
-              <li class="nav-item menu-open">
-                <a href="{{ baseURL }}/" class="nav-link active">
-                  <i class="nav-icon bi bi-speedometer"></i>
-                  <p>
-                    Dashboard
-                    <i class="nav-arrow bi bi-chevron-right"></i>
-                  </p>
-                </a>
-               
-              </li>
-             
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="nav-icon bi bi-box-seam-fill"></i>
-                  <p>
-                    Users
-                    <i class="nav-arrow bi bi-chevron-right"></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="./widgets/small-box.html" class="nav-link">
-                      <i class="nav-icon bi bi-circle"></i>
-                      <p>All Users</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="./widgets/info-box.html" class="nav-link">
-                      <i class="nav-icon bi bi-circle"></i>
-                      <p>Add User</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="./widgets/cards.html" class="nav-link">
-                      <i class="nav-icon bi bi-circle"></i>
-                      <p>Roles & Permissions</p>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="nav-icon bi bi-clipboard-fill"></i>
-                  <p>
-                    Visitors
-                    <span class="nav-badge badge text-bg-secondary me-3">6</span>
-                    <i class="nav-arrow bi bi-chevron-right"></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="./layout/unfixed-sidebar.html" class="nav-link">
-                      <i class="nav-icon bi bi-circle"></i>
-                      <p>Pending Approvals</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="./layout/fixed-sidebar.html" class="nav-link">
-                      <i class="nav-icon bi bi-circle"></i>
-                      <p>Approved Visitors</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="./layout/fixed-header.html" class="nav-link">
-                      <i class="nav-icon bi bi-circle"></i>
-                      <p>Rejected Visitors</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="./layout/fixed-footer.html" class="nav-link">
-                      <i class="nav-icon bi bi-circle"></i>
-                      <p>Pre-Approved Visitors</p>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="nav-icon bi bi-tree-fill"></i>
-                  <p>
-                    Staff Management
-                    <i class="nav-arrow bi bi-chevron-right"></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="./UI/general.html" class="nav-link">
-                      <i class="nav-icon bi bi-circle"></i>
-                      <p>Security Guards</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="./UI/icons.html" class="nav-link">
-                      <i class="nav-icon bi bi-circle"></i>
-                      <p>Housekeeping</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="./UI/timeline.html" class="nav-link">
-                      <i class="nav-icon bi bi-circle"></i>
-                      <p>Staff Attendance</p>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="nav-icon bi bi-pencil-square"></i>
-                  <p>
-                    Community Settings
-                    <i class="nav-arrow bi bi-chevron-right"></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="{{ baseURL }}/community/add_details" class="nav-link">
-                      <i class="nav-icon bi bi-circle"></i>
-                      <p>Community Details</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="./forms/general.html" class="nav-link">
-                      <i class="nav-icon bi bi-circle"></i>
-                      <p>Block Management</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="./forms/general.html" class="nav-link">
-                      <i class="nav-icon bi bi-circle"></i>
-                      <p>Unit Management</p>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              
-              <li class="nav-header">Admin Settings</li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="nav-icon bi bi-box-arrow-in-right"></i>
-                  <p>
-                    User Profile
-                    <i class="nav-arrow bi bi-chevron-right"></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="#" class="nav-link">
-                      <i class="nav-icon bi bi-box-arrow-in-right"></i>
-                      <p>
-                        Profile
-                        <i class="nav-arrow bi bi-chevron-right"></i>
-                      </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                      <li class="nav-item">
-                        <a href="./examples/login.html" class="nav-link">
-                          <i class="nav-icon bi bi-circle"></i>
-                          <p>Roles & Permissions</p>
-                        </a>
-                      </li>
-                      <li class="nav-item">
-                        <a href="./examples/register.html" class="nav-link">
-                          <i class="nav-icon bi bi-circle"></i>
-                          <p>Change Password</p>
-                        </a>
-                      </li>
-                     
-                    </ul>
-                  </li>
+<div class="sidebar-brand">
+  <a href="{{ baseURL }}/" class="brand-link">
+    <!-- <img
+      src="{{ baseURL }}/assets/img/AdminLTELogo.png"
+      alt="Admin"
+      class="brand-image opacity-75 shadow"
+    /> -->
+    {{ .session_data.User_default_community }}
+  </a>
+</div>
 
-                </ul>
-              </li>
-              
-              <li class="nav-item">
-                <a href="{{ baseURL }}/auth/logout" class="nav-link">
-                  <i class="nav-icon bi bi-circle"></i>
-                  <p>Logout</p>
-                </a>
-              </li>
-            </ul>
-            <!--end::Sidebar Menu-->
-          </nav>
-        </div>
+<div class="sidebar-wrapper">
+  <nav class="mt-2">
+    <ul
+      class="nav sidebar-menu flex-column"
+      data-lte-toggle="treeview"
+      role="navigation"
+      aria-label="Main navigation"
+      data-accordion="false"
+      id="navigation"
+    >
+
+      {{ range .Menu }}
+
+      {{ if .Children }}
+      <!-- Parent with submenu -->
+      <li class="nav-item">
+        <a href="#" class="nav-link">
+          <i class="nav-icon bi {{ .Icon }}"></i>
+          <p>
+            {{ .Title }}
+            <i class="nav-arrow bi bi-chevron-right"></i>
+          </p>
+        </a>
+
+        <ul class="nav nav-treeview">
+          {{ range .Children }}
+          <li class="nav-item">
+            <a href="{{ baseURL }}{{ .URL }}" class="nav-link">
+              <i class="nav-icon bi bi-circle"></i>
+              <p>{{ .Title }}</p>
+            </a>
+          </li>
+          {{ end }}
+        </ul>
+      </li>
+
+      {{ else }}
+      <!-- Single menu item -->
+      <li class="nav-item">
+        <a href="{{ baseURL }}{{ .URL }}" class="nav-link">
+          <i class="nav-icon bi {{ .Icon }}"></i>
+          <p>
+            {{ .Title }}
+          </p>
+        </a>
+      </li>
+      {{ end }}
+
+      {{ end }}
+
+    </ul>
+  </nav>
+</div>
 {{ end }}

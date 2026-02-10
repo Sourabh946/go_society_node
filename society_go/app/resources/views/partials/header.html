@@ -16,99 +16,72 @@
           <!--end::Start Navbar Links-->
           <!--begin::End Navbar Links-->
           <ul class="navbar-nav ms-auto">
-            <!--begin::Navbar Search-->
-            <li class="nav-item">
-              <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-                <i class="bi bi-search"></i>
+
+              <li class="nav-item dropdown">
+              <a class="nav-link" data-bs-toggle="dropdown" href="#">
+                <i class="bi bi-person-check-fill">Role</i>
+                <!-- <span class="navbar-badge badge text-bg-warning">15</span> -->
               </a>
+              <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
+                <!-- <span class="dropdown-item dropdown-header">15 Notifications</span> -->
+                
+               {{ if .session_data.Roles }}
+                {{ range .session_data.Roles }}
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <i class="bi bi-people me-2"></i> {{ .RoleName }}
+                        <span class="float-end text-secondary fs-7">
+                            {{ if eq .RoleID $.session_data.CurrentRoleID }}
+                                <i class="bi bi-check-circle-fill text-success"></i>
+                            {{ end }}
+                        </span>
+                    </a>
+                {{ end }}
+            {{ end }}
+
+              </div>
             </li>
-            <!--end::Navbar Search-->
+           
             <!--begin::Messages Dropdown Menu-->
             <li class="nav-item dropdown">
               <a class="nav-link" data-bs-toggle="dropdown" href="#">
-                <i class="bi bi-chat-text"></i>
-                <span class="navbar-badge badge text-bg-danger">3</span>
+                <i class="bi bi-buildings"> Communities</i>
+                <!-- <span class="navbar-badge badge text-bg-danger">3</span> -->
               </a>
               <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
-                <a href="#" class="dropdown-item">
-                  <!--begin::Message-->
-                  <div class="d-flex">
-                    <div class="flex-shrink-0">
-                      <img
-                        src="./assets/img/user1-128x128.jpg"
-                        alt="User Avatar"
-                        class="img-size-50 rounded-circle me-3"
-                      />
-                    </div>
-                    <div class="flex-grow-1">
-                      <h3 class="dropdown-item-title">
-                        Brad Diesel
-                        <span class="float-end fs-7 text-danger"
-                          ><i class="bi bi-star-fill"></i
-                        ></span>
-                      </h3>
-                      <p class="fs-7">Call me whenever you can...</p>
-                      <p class="fs-7 text-secondary">
-                        <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
-                      </p>
-                    </div>
-                  </div>
-                  <!--end::Message-->
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                  <!--begin::Message-->
-                  <div class="d-flex">
-                    <div class="flex-shrink-0">
-                      <img
-                        src="./assets/img/user8-128x128.jpg"
-                        alt="User Avatar"
-                        class="img-size-50 rounded-circle me-3"
-                      />
-                    </div>
-                    <div class="flex-grow-1">
-                      <h3 class="dropdown-item-title">
-                        John Pierce
-                        <span class="float-end fs-7 text-secondary">
-                          <i class="bi bi-star-fill"></i>
-                        </span>
-                      </h3>
-                      <p class="fs-7">I got your message bro</p>
-                      <p class="fs-7 text-secondary">
-                        <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
-                      </p>
-                    </div>
-                  </div>
-                  <!--end::Message-->
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                  <!--begin::Message-->
-                  <div class="d-flex">
-                    <div class="flex-shrink-0">
-                      <img
-                        src="./assets/img/user3-128x128.jpg"
-                        alt="User Avatar"
-                        class="img-size-50 rounded-circle me-3"
-                      />
-                    </div>
-                    <div class="flex-grow-1">
-                      <h3 class="dropdown-item-title">
-                        Nora Silvester
-                        <span class="float-end fs-7 text-warning">
-                          <i class="bi bi-star-fill"></i>
-                        </span>
-                      </h3>
-                      <p class="fs-7">The subject goes here</p>
-                      <p class="fs-7 text-secondary">
-                        <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
-                      </p>
-                    </div>
-                  </div>
-                  <!--end::Message-->
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+                 {{ if .Communities }}
+    {{ range .Communities }}
+
+        {{/* If Super Admin → show all */}}
+        {{ if eq $.session_data.CurrentRoleID 1 }}
+
+            <div class="dropdown-divider"></div>
+            <a href="{{ baseURL }}/community/switch/{{ .ID }}" class="dropdown-item">
+                <i class="bi bi-building me-2"></i> {{ .Name }}
+                <span class="float-end text-secondary fs-7">
+                    {{ if eq .ID $.session_data.User_default_community_Id }}
+                        <i class="bi bi-check-circle-fill text-success"></i>
+                    {{ else }}
+                        <i class="bi bi-circle text-secondary"></i>
+                    {{ end }}
+                </span>
+            </a>
+
+        {{/* Else → show only user's community */}}
+        {{ else if eq .ID $.session_data.User_default_community_Id }}
+
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item">
+                <i class="bi bi-building me-2"></i> {{ .Name }}
+                <span class="float-end text-secondary fs-7">
+                    <i class="bi bi-check-circle-fill text-success"></i>
+                </span>
+            </a>
+
+        {{ end }}
+    {{ end }}
+{{ end }}
+
               </div>
             </li>
             <!--end::Messages Dropdown Menu-->
@@ -162,12 +135,12 @@
                 <!--begin::User Image-->
                 <li class="user-header text-bg-primary">
                   <img
-                    src="./assets/img/user2-160x160.jpg"
+                     src="../../images/av2.jpeg"
                     class="rounded-circle shadow"
                     alt="User Image"
                   />
                   <p>
-                    Alexander Pierce - Web Developer
+                   {{ .session_data.UserName }}
                     <small>Member since Nov. 2023</small>
                   </p>
                 </li>
@@ -186,7 +159,7 @@
                 <!--begin::Menu Footer-->
                 <li class="user-footer">
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
-                  <a href="#" class="btn btn-default btn-flat float-end">Sign out</a>
+                  <a href="{{ baseURL }}/auth/logout" class="btn btn-default btn-flat float-end">Sign out</a>
                 </li>
                 <!--end::Menu Footer-->
               </ul>
