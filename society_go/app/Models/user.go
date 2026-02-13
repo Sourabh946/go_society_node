@@ -8,6 +8,6 @@ type User struct {
 	Email     string         `gorm:"size:150;not null;unique" json:"email"`
 	Password  string         `gorm:"size:255;not null" json:"-"`
 	Roles     []UserRoleInfo `json:"roles" gorm:"-"`
-	CreatedAt time.Time      `gorm:"autoCreateTime" json:"created_at"`
-	UpdatedAt time.Time      `gorm:"autoUpdateTime" json:"updated_at"`
+	created_at time.Time      `gorm:"autoCreateTime" json:"created_at"`
+	updated_at time.Time      `gorm:"autoUpdateTime" json:"updated_at"`
 }

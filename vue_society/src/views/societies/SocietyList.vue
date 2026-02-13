@@ -76,6 +76,7 @@ onMounted(load)
                         <th>#</th>
                         <th>Name</th>
                         <th>Registration No</th>
+                        <th>Address</th>
                         <th width="150">Actions</th>
                     </tr>
                 </thead>
@@ -92,6 +93,7 @@ onMounted(load)
                             </span>
                         </td>
                         <td>{{ s.name }}</td>
+                        <td>{{ s.reg_no }}</td>
                         <td>{{ s.address }}</td>
                         <td class="table-actions">
                             <router-link :to="`/societies/${s.id}`" class="btn btn-primary">

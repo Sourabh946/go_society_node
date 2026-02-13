@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         {
             tableName: 'roles',
+            underscored: true,
             paranoid: true
         }
     );

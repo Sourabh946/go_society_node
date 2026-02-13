@@ -16,7 +16,8 @@ exports.register = async (req, res) => {
         const user = await User.create({
             name,
             email,
-            password: hashedPassword,
+            // password: hashedPassword,
+            password: password,
             role_id
         });
 
@@ -35,6 +36,7 @@ exports.login = async (req, res) => {
 
         const user = await User.findOne({
             where: { email },
+            attributes: ['id', 'name', 'email', 'password'],
             include: [
                 {
                     model: Role,
@@ -44,12 +46,12 @@ exports.login = async (req, res) => {
         });
 
         if (!user) {
-            return res.status(401).json({ message: 'Invalid credentials' });
+            return res.status(401).json({ message: 'Invalid credentials.' });
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            return res.status(401).json({ message: 'Invalid credentials' });
+            return res.status(401).json({ message: 'Invalid credentials..' });
         }
 
         const token = generateToken({
@@ -66,7 +68,9 @@ exports.login = async (req, res) => {
                 role: user.role.name
             }
         });
+
     } catch (err) {
         return res.status(500).json({ error: err.message });
     }
 };
+

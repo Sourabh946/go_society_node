@@ -5,7 +5,7 @@ const auth = require('../middlewares/auth.middleware');
 const role = require('../middlewares/role.middleware');
 const controller = require('../controllers/society.controller');
 
-router.use(auth, role('admin'));
+router.use(auth, role('Admin'));
 
 router.post('/', controller.create);
 router.get('/', controller.getAll);

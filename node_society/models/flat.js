@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         {
             tableName: 'flats',
+            underscored: true,
             paranoid: true
         }
     );
@@ -16,6 +17,11 @@ module.exports = (sequelize, DataTypes) => {
         Flat.belongsTo(models.Building, {
             foreignKey: 'building_id',
             as: 'building'
+        });
+
+        Flat.hasMany(models.Member, {
+            foreignKey: 'flat_id',
+            as: 'member'
         })
     }
 

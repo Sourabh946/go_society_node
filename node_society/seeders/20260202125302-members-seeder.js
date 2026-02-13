@@ -17,9 +17,20 @@ module.exports = {
         id: 1,
         user_id: 1,     // admin user
         flat_id: 1,
-        is_owner: true,
-        createdAt: new Date(),
-        updatedAt: new Date()
+        role: 'owner',
+        from_date: '2024-01-01',
+        is_active: true,
+        created_at: new Date(),
+        updated_at: new Date()
+      },
+      {
+        user_id: 2,        // John Member
+        flat_id: 2,        // A-101
+        role: 'owner',
+        from_date: '2024-01-01',
+        is_active: true,
+        created_at: new Date(),
+        updated_at: new Date()
       }
     ]);
   },

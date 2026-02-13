@@ -10,8 +10,6 @@ const isEdit = route.params.id
 
 const form = ref({
     name: '',
-    reg_no: '',
-    address: ''
 })
 
 const error = ref('')
@@ -19,7 +17,7 @@ const loading = ref(false)
 
 const load = async () => {
     if (!isEdit) return
-    const res = await api.get('/societies')
+    const res = await api.get('/roles')
     const s = res.data.find(x => x.id == isEdit)
     if (s) form.value = s
 }
@@ -27,7 +25,7 @@ const load = async () => {
 const submit = async () => {
     error.value = ''
 
-    if (!form.value.name || !form.value.reg_no || !form.value.address) {
+    if (!form.value.name) {
         error.value = 'All fields are required'
         return
     }
@@ -35,11 +33,11 @@ const submit = async () => {
     loading.value = true
     try {
         if (isEdit) {
-            await api.patch(`/societies/${isEdit}`, form.value)
+            await api.patch(`/roles/${isEdit}`, form.value)
         } else {
-            await api.post('/societies', form.value)
+            await api.post('/roles', form.value)
         }
-        router.push('/societies')
+        router.push('/roles')
     } catch (e) {
         error.value = e.response?.data?.message
     } finally {
@@ -52,18 +50,12 @@ onMounted(load)
 
 <template>
     <div class="card" style="max-width:520px">
-        <h2>{{ isEdit ? 'Edit Society' : 'Create Society' }}</h2><br />
+        <h2>{{ isEdit ? 'Edit Role' : 'Create Role' }}</h2><br />
 
         <div v-if="error" style="color:#dc2626">{{ error }}</div>
 
         <label>Name</label>
         <input v-model="form.name" />
-
-        <label>Registraion No</label>
-        <input v-model="form.reg_no" />
-
-        <label>Address</label>
-        <input v-model="form.address" />
 
         <button class="btn btn-primary" :disabled="loading" @click="submit">
             {{ loading ? 'Saving...' : 'Save' }}

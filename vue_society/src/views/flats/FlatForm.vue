@@ -6,8 +6,12 @@ import api from '../../api/axios'
 const route = useRoute()
 const router = useRouter()
 
+/* --------------------
+   State
+-------------------- */
 const flatId = route.params.id
 const isEdit = !!flatId
+const isInitializing = ref(true)
 
 const form = ref({
     flat_number: '',
@@ -17,46 +21,72 @@ const form = ref({
 
 const societies = ref([])
 const buildings = ref([])
-const error = ref('')
-const loading = ref(false)
 
-/* Load societies */
+const loading = ref(false)
+const error = ref('')
+
+/* --------------------
+   API Calls
+-------------------- */
 const loadSocieties = async () => {
     const res = await api.get('/societies')
     societies.value = res.data
 }
 
-/* Load buildings by society */
 const loadBuildings = async (societyId) => {
     if (!societyId) {
         buildings.value = []
         return
     }
+
     const res = await api.get(`/buildings?society_id=${societyId}`)
     buildings.value = res.data
 }
 
-/* Load flat for edit */
 const loadFlat = async () => {
-    if (!isEdit) return
+    if (!isEdit) {
+        isInitializing.value = false
+        return
+    }
 
     const res = await api.get(`/flats/${flatId}`)
     const flat = res.data
-    // console.log(flat.building.name);
-    // console.log(flat.building.society.name);
+
     form.value.flat_number = flat.flat_number
     form.value.society_id = flat.building.society_id
-    form.value.building_id = flat.building_id
 
-    // await loadBuildings(form.value.society_id)
+    // 🔥 Load dependent data BEFORE setting selected value
+    await loadBuildings(form.value.society_id)
+
+    form.value.building_id = flat.building_id
+    isInitializing.value = false
 }
 
-/* Watch society change */
-watch(() => form.value.society_id, (newVal) => {
-    form.value.building_id = ''
-    loadBuildings(newVal)
-})
+/* --------------------
+   Watchers
+-------------------- */
+watch(
+    () => form.value.society_id,
+    async (newVal, oldVal) => {
+        if (isInitializing.value) return   // 🔥 PREVENT DOUBLE CALL
+        if (!newVal) {
+            buildings.value = []
+            form.value.building_id = ''
+            return
+        }
 
+        await loadBuildings(newVal)
+
+        // Reset building ONLY when user changes society
+        if (!isInitializing.value && newVal !== oldVal) {
+            form.value.building_id = ''
+        }
+    }
+)
+
+/* --------------------
+   Submit
+-------------------- */
 const submit = async () => {
     error.value = ''
 
@@ -80,12 +110,14 @@ const submit = async () => {
     }
 }
 
+/* --------------------
+   Lifecycle
+-------------------- */
 onMounted(async () => {
     await loadSocieties()
     await loadFlat()
 })
 </script>
-
 
 <template>
     <div class="card" style="max-width:520px">

@@ -12,7 +12,7 @@ exports.create = async (req, res) => {
     }
 };
 
-exports.getAll = async (req, res) => {
+/* exports.getAll = async (req, res) => {
     try {
         const flats = await Flat.findAll({
             include: [
@@ -32,6 +32,53 @@ exports.getAll = async (req, res) => {
         res.json(flats);
     } catch (err) {
         res.status(500).json({ error: err.message });
+    }
+}; */
+
+exports.getAll = async (req, res, next) => {
+    try {
+        const { building_id, page = 1, limit = 10 } = req.query;
+
+        const where = {};
+        if (building_id) {
+            if (isNaN(building_id)) {
+                return res.status(400).json({ error: 'Invalid building_id' });
+            }
+            where.building_id = building_id;
+        }
+
+        const offset = (page - 1) * limit;
+
+        const { rows, count } = await Flat.findAndCountAll({
+            where,
+            include: [{
+                model: Building,
+                as: 'building',
+                attributes: ['id', 'name'],
+                include: [
+                    {
+                        model: Society,
+                        as: 'society',   // 🔥 REQUIRED
+                        attributes: ['id', 'name']
+                    }
+                ]
+            }],
+            attributes: ['id', 'flat_number'],
+            limit: parseInt(limit),
+            offset: parseInt(offset),
+            order: [['id', 'DESC']]
+        });
+
+        return res.json({
+            data: rows,
+            meta: {
+                total: count,
+                page: Number(page),
+                limit: Number(limit)
+            }
+        });
+    } catch (err) {
+        next(err);
     }
 };
 
@@ -78,5 +125,31 @@ exports.remove = async (req, res) => {
         res.json({ message: 'Flat deleted' });
     } catch (err) {
         res.status(500).json({ error: err.message });
+    }
+};
+
+exports.getFlatsByBuilding = async (req, res) => {
+    try {
+        const { building_id } = req.params;
+
+        if (!building_id) {
+            return res.status(400).json({ error: 'building_id is required' });
+        }
+
+        const flats = await Flat.findAll({
+            where: { building_id },
+            include: [
+                {
+                    model: Building,
+                    as: 'building',
+                    attributes: ['id', 'name']
+                }
+            ]
+        });
+
+        return res.json(flats);
+    } catch (error) {
+        console.error('Error fetching flats by building:', error);
+        return res.status(500).json({ error: 'Internal server error' });
     }
 };

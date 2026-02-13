@@ -17,15 +17,15 @@ module.exports = {
         id: 1,
         name: 'A Wing',
         society_id: 1,
-        createdAt: new Date(),
-        updatedAt: new Date()
+        created_at: new Date(),
+        updated_at: new Date()
       },
       {
         id: 2,
         name: 'B Wing',
         society_id: 1,
-        createdAt: new Date(),
-        updatedAt: new Date()
+        created_at: new Date(),
+        updated_at: new Date()
       }
     ]);
   },

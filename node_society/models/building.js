@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         {
             tableName: 'buildings',
+            underscored: true,
             paranoid: true
         }
     );

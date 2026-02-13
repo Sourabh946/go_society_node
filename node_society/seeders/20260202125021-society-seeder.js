@@ -16,9 +16,10 @@ module.exports = {
       {
         id: 1,
         name: 'Green Valley Society',
+        reg_no: 'AHD111',
         address: 'Main Road, Ahmedabad',
-        createdAt: new Date(),
-        updatedAt: new Date()
+        created_at: new Date(),
+        updated_at: new Date()
       }
     ]);
   },

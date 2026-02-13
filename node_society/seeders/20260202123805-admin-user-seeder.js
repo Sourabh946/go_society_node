@@ -23,8 +23,17 @@ module.exports = {
         email: 'admin@super.com',
         password,
         role_id: 1, // admin
-        createdAt: new Date(),
-        updatedAt: new Date()
+        created_at: new Date(),
+        updated_at: new Date()
+      },
+      {
+        id: 2,
+        name: 'Secretary',
+        email: 'secretary@super.com',
+        password,
+        role_id: 2, // admin
+        created_at: new Date(),
+        updated_at: new Date()
       }
     ]);
   },

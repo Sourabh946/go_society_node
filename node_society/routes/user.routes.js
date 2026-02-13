@@ -8,15 +8,15 @@ const controller = require('../controllers/user.controller');
 router.use(auth);
 
 // admin only
-router.get('/', role('admin'), controller.getAll);
-router.post('/', role('admin'), controller.create);
-router.get('/:id', role('admin'), controller.getById);
-router.put('/:id', role('admin'), controller.update);
-router.delete('/:id', role('admin'), controller.remove);
-router.put('/:id/password', role('admin'), controller.changePassword);
-router.put('/:id/role', role('admin'), controller.changeRole);
+router.get('/', role('Admin'), controller.getAll);
+router.post('/', role('Admin'), controller.create);
+router.get('/:id', role('Admin'), controller.getById);
+router.put('/:id', role('Admin'), controller.update);
+router.delete('/:id', role('Admin'), controller.remove);
+router.put('/:id/password', role('Admin'), controller.changePassword);
+// router.put('/:id/role', role('Admin'), controller.changeRole);
 
 // admin + secretary
-router.put('/:id/flat', role('admin', 'secretary'), controller.assignFlat);
+router.put('/:id/flat', role('Admin', 'Secretary'), controller.assignFlat);
 
 module.exports = router;

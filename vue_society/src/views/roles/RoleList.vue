@@ -2,7 +2,7 @@
 import { ref, computed, onMounted } from 'vue'
 import api from '../../api/axios'
 
-const flats = ref([])
+const roles = ref([])
 const search = ref('')
 const loading = ref(false)
 const error = ref('')
@@ -14,8 +14,8 @@ const perPage = 7
 const load = async () => {
     loading.value = true
     try {
-        const res = await api.get('/flats')
-        flats.value = res.data.data
+        const res = await api.get('/roles')
+        roles.value = res.data
     } catch (e) {
         error.value = e.response?.data?.message || 'Failed to load'
     } finally {
@@ -24,11 +24,10 @@ const load = async () => {
 }
 
 const filtered = computed(() => {
-    if (!search.value) return flats.value
-    return flats.value.filter(f =>
-        f.flat_number.toLowerCase().includes(search.value.toLowerCase()) ||
-        f.society?.name.toLowerCase().includes(search.value.toLowerCase()) ||
-        f.society?.building?.name.toLowerCase().includes(search.value.toLowerCase())
+    if (!search.value) return roles.value
+    return roles.value.filter(s =>
+        s.name.toLowerCase().includes(search.value.toLowerCase()) ||
+        s.address.toLowerCase().includes(search.value.toLowerCase())
     )
 })
 
@@ -42,9 +41,9 @@ const paginated = computed(() => {
 })
 
 const remove = async (id) => {
-    if (!confirm('Delete this flat?')) return
+    if (!confirm('Delete this role?')) return
     try {
-        await api.delete(`/flats/${id}`)
+        await api.delete(`/roles/${id}`)
         load()
     } catch (e) {
         alert(e.response?.data?.message)
@@ -57,14 +56,14 @@ onMounted(load)
 <template>
     <div class="card">
         <div class="table-toolbar">
-            <h2>Flats</h2>
+            <h2>Roles</h2>
 
-            <router-link to="/flats/create" class="btn btn-primary">
-                Add Flat
+            <router-link to="/roles/create" class="btn btn-primary">
+                Add Role
             </router-link>
         </div>
 
-        <input v-model="search" placeholder="Search by flat number or building/society name" />
+        <input v-model="search" placeholder="Search by name or reg no" />
     </div>
 
     <div class="card">
@@ -75,9 +74,7 @@ onMounted(load)
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Flat Number</th>
-                        <th>Society</th>
-                        <th>Building Name</th>
+                        <th>Name</th>
                         <th width="150">Actions</th>
                     </tr>
                 </thead>
@@ -87,28 +84,26 @@ onMounted(load)
                         <td colspan="4">Loading...</td>
                     </tr>
 
-                    <tr v-for="(f, index) in paginated" :key="f.id">
+                    <tr v-for="(s, index) in paginated" :key="s.id">
                         <td>
                             <span class="badge">
                                 {{ (page - 1) * perPage + index + 1 }}
                             </span>
                         </td>
-                        <td>{{ f.flat_number }}</td>
-                        <td>{{ f.building?.society?.name }}</td>
-                        <td>{{ f.building?.name }}</td>
+                        <td>{{ s.name }}</td>
                         <td class="table-actions">
-                            <router-link :to="`/flats/${f.id}`" class="btn btn-primary">
+                            <router-link :to="`/roles/${s.id}`" class="btn btn-primary">
                                 Edit
                             </router-link>
 
-                            <button class="btn btn-danger" @click="remove(f.id)">
+                            <button class="btn btn-danger" @click="remove(s.id)">
                                 Delete
                             </button>
                         </td>
                     </tr>
 
                     <tr v-if="!loading && paginated.length === 0">
-                        <td colspan="4">No flats found</td>
+                        <td colspan="4">No roles found</td>
                     </tr>
                 </tbody>
             </table>

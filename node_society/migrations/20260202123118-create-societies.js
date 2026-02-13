@@ -7,11 +7,11 @@ module.exports = {
      * Add altering commands here.
      *
      * Example:
-     * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
+     * await queryInterface.createTable('societies', { id: Sequelize.BIGINT });
      */
     await queryInterface.createTable('societies', {
       id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.BIGINT,
         autoIncrement: true,
         primaryKey: true
       },
@@ -21,16 +21,22 @@ module.exports = {
         allowNull: false,
         unique: true // ✅ DB-level UNIQUE
       },
+
+      reg_no: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true // ✅ DB-level UNIQUE
+      },
       address: Sequelize.TEXT,
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      deletedAt: {
+      deleted_at: {
         type: Sequelize.DATE,
         allowNull: true
       }
@@ -48,7 +54,7 @@ module.exports = {
 
     await queryInterface.addIndex(
       'societies',
-      ['registration_no', 'deleted_at'],
+      ['reg_no', 'deleted_at'],
       {
         unique: true,
         name: 'uq_society_reg_no_active'
@@ -61,7 +67,7 @@ module.exports = {
      * Add reverting commands here.
      *
      * Example:
-     * await queryInterface.dropTable('users');
+     * await queryInterface.dropTable('societies');
      */
     await queryInterface.dropTable('societies');
   }

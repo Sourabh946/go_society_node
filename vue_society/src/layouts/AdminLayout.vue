@@ -13,6 +13,9 @@ const auth = useAuthStore()
             <router-link to="/societies">Societies</router-link>
             <router-link to="/buildings">Buildings</router-link>
             <router-link to="/flats">Flats</router-link>
+            <router-link to="/members">Members</router-link>
+            <router-link to="/users">Users</router-link>
+            <router-link to="/roles">Roles</router-link>
 
             <br />
             <button class="btn btn-danger" @click="auth.logout">Logout</button>

@@ -1,25 +1,55 @@
-'use strict';
 module.exports = (sequelize, DataTypes) => {
     const Member = sequelize.define(
         'Member',
         {
-            user_id: DataTypes.INTEGER,
-            flat_id: DataTypes.INTEGER,
-            is_owner: {
+            user_id: {
+                type: DataTypes.INTEGER,
+                allowNull: false
+            },
+
+            flat_id: {
+                type: DataTypes.INTEGER,
+                allowNull: false
+            },
+
+            role: {
+                type: DataTypes.ENUM('owner', 'tenant'),
+                allowNull: false
+            },
+
+            is_active: {
                 type: DataTypes.BOOLEAN,
-                defaultValue: false
+                defaultValue: true
+            },
+
+            from_date: {
+                type: DataTypes.DATEONLY,
+                allowNull: false
+            },
+
+            to_date: {
+                type: DataTypes.DATEONLY,
+                allowNull: true
             }
         },
         {
             tableName: 'members',
+            underscored: true,
             paranoid: true
         }
-    );
+    )
 
-    Member.associate = models => {
-        Member.belongsTo(models.User, { foreignKey: 'user_id' });
-        Member.belongsTo(models.Flat, { foreignKey: 'flat_id' });
-    };
+    Member.associate = (models) => {
+        Member.belongsTo(models.User, {
+            foreignKey: 'user_id',
+            as: 'user'
+        })
 
-    return Member;
-};
+        Member.belongsTo(models.Flat, {
+            foreignKey: 'flat_id',
+            as: 'flat'
+        })
+    }
+
+    return Member
+}

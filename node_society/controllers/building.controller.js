@@ -14,17 +14,57 @@ exports.create = async (req, res) => {
 
 exports.getAll = async (req, res) => {
     try {
-        const buildings = await Building.findAll({ include: Society });
+        console.log('getAll');
+        const buildings = await Building.findAll(
+            {
+                include: [
+                    {
+                        model: Society,
+                        as: 'society',   // 🔥 REQUIRED
+                        attributes: ['id', 'name']
+                    }
+                ],
+                order: [['name', 'ASC']]
+            }
+        );
         res.json(buildings);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
 };
 
+exports.index = async (req, res) => {
+    try {
+        const where = {}
+
+        if (req.query.society_id) {
+            where.society_id = req.query.society_id
+        }
+
+        const buildings = await Building.findAll({
+            where,
+            include: [
+                {
+                    model: Society,
+                    as: 'society',   // 🔥 REQUIRED
+                    attributes: ['id', 'name']
+                }
+            ],
+            order: [['name', 'ASC']]
+        })
+
+        res.json(buildings)
+    } catch (err) {
+        console.error(err)
+        res.status(500).json({ error: err.message })
+    }
+}
+
 exports.getById = async (req, res) => {
     try {
         const building = await Building.findByPk(req.params.id, {
-            include: Society
+            include: Society,
+            as: 'society'
         });
         if (!building) return res.status(404).json({ message: 'Not found' });
         res.json(building);
@@ -56,30 +96,3 @@ exports.remove = async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 };
-
-exports.index = async (req, res) => {
-  try {
-    const where = {}
-
-    if (req.query.society_id) {
-      where.society_id = req.query.society_id
-    }
-
-    const buildings = await Building.findAll({
-      where,
-      include: [
-        {
-          model: Society,
-          as: 'society',   // 🔥 REQUIRED
-          attributes: ['id', 'name']
-        }
-      ],
-      order: [['name', 'ASC']]
-    })
-
-    res.json(buildings)
-  } catch (err) {
-    console.error(err)
-    res.status(500).json({ error: err.message })
-  }
-}

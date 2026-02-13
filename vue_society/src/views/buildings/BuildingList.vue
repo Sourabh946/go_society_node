@@ -59,7 +59,7 @@ onMounted(load)
             <h2>Buildings</h2>
 
             <router-link to="/buildings/create" class="btn btn-primary">
-                + Add Building
+                Add Building
             </router-link>
         </div>
 
@@ -92,7 +92,7 @@ onMounted(load)
                             </span>
                         </td>
                         <td>{{ b.name }}</td>
-                        <td>{{ b.Society?.name }}</td>
+                        <td>{{ b.society?.name }}</td>
                         <td class="table-actions">
                             <router-link :to="`/buildings/${b.id}`" class="btn btn-primary">
                                 Edit

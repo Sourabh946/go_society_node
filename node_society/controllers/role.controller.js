@@ -1,4 +1,4 @@
-const { Society, Building, sequelize } = require('../models');
+const { Role, User, sequelize } = require('../models');
 const { isDuplicate } = require('../utils/duplicateCheck');
 const { preventDeleteIfExists } = require('../utils/relationCheck');
 
@@ -9,20 +9,20 @@ exports.create = async (req, res) => {
         const { name, reg_no, address } = req.body;
 
         // Duplicate check FIRST (cheapest operation)
-        if (await isDuplicate(Society, { reg_no })) {
+        if (await isDuplicate(Role, { reg_no })) {
             await t.rollback();
             return res.status(409).json({
-                message: 'Society with this registration number already exists'
+                message: 'Role with this registration number already exists'
             });
         }
 
-        const society = await Society.create(
+        const role = await Role.create(
             { name, reg_no, address },
             { transaction: t }
         );
 
         await t.commit();
-        res.status(201).json(society);
+        res.status(201).json(role);
 
     } catch (err) {
         await t.rollback();
@@ -32,7 +32,11 @@ exports.create = async (req, res) => {
 
 exports.getAll = async (_, res) => {
     try {
-        res.json(await Society.findAll());
+        res.json(await Role.findAll(
+            {
+                attributes: ['id', 'name']
+            }
+        ));
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -40,11 +44,11 @@ exports.getAll = async (_, res) => {
 
 exports.getById = async (req, res) => {
     try {
-        const society = await Society.findByPk(req.params.id);
-        if (!society) {
-            return res.status(404).json({ message: 'Society not found' });
+        const role = await Role.findByPk(req.params.id);
+        if (!role) {
+            return res.status(404).json({ message: 'Role not found' });
         }
-        res.json(society);
+        res.json(role);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -54,33 +58,33 @@ exports.update = async (req, res) => {
     const t = await sequelize.transaction();
 
     try {
-        const societyId = req.params.id;
+        const roleId = req.params.id;
         const { name, reg_no, address } = req.body;
 
         // Duplicate check BEFORE fetching full record
         if (
             reg_no &&
-            await isDuplicate(Society, { reg_no }, societyId)
+            await isDuplicate(Role, { reg_no }, roleId)
         ) {
             await t.rollback();
             return res.status(409).json({
-                message: 'Society with this registration number already exists'
+                message: 'Role name already exists'
             });
         }
 
-        const society = await Society.findByPk(societyId, { transaction: t });
-        if (!society) {
+        const role = await Role.findByPk(roleId, { transaction: t });
+        if (!role) {
             await t.rollback();
-            return res.status(404).json({ message: 'Society not found' });
+            return res.status(404).json({ message: 'Role not found' });
         }
 
-        await society.update(
+        await role.update(
             { name, reg_no, address },
             { transaction: t }
         );
 
         await t.commit();
-        res.json({ message: 'Society updated successfully' });
+        res.json({ message: 'Role updated successfully' });
 
     } catch (err) {
         await t.rollback();
@@ -92,22 +96,22 @@ exports.remove = async (req, res) => {
     const t = await sequelize.transaction();
 
     try {
-        const society = await Society.findByPk(req.params.id, { transaction: t });
-        if (!society) {
+        const role = await Role.findByPk(req.params.id, { transaction: t });
+        if (!role) {
             await t.rollback();
-            return res.status(404).json({ message: 'Society not found' });
+            return res.status(404).json({ message: 'Role not found' });
         }
 
         await preventDeleteIfExists(
-            Building,
-            { society_id: society.id },
-            'Society has buildings. Delete buildings first.'
+            User,
+            { role_id: role.id },
+            'Role has buildings. Delete buildings first.'
         );
 
-        await society.destroy({ transaction: t });
+        await role.destroy({ transaction: t });
 
         await t.commit();
-        res.json({ message: 'Society deleted successfully' });
+        res.json({ message: 'Role deleted successfully' });
 
     } catch (err) {
         await t.rollback();

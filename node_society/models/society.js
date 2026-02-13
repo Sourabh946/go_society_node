@@ -4,10 +4,12 @@ module.exports = (sequelize, DataTypes) => {
         'Society',
         {
             name: DataTypes.STRING,
+            reg_no: DataTypes.STRING,
             address: DataTypes.TEXT
         },
         {
             tableName: 'societies',
+            underscored: true,
             paranoid: true
         }
     );

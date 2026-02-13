@@ -176,3 +176,13 @@ select {
     background-size: 14px;
     padding-right: 32px;
 }
+
+.badge.owner {
+    background: #16a34a;
+    color: white;
+}
+
+.badge.tenant {
+    background: #2563eb;
+    color: white;
+}

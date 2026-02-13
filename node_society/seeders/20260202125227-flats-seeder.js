@@ -17,22 +17,22 @@ module.exports = {
         id: 1,
         flat_number: 'A-101',
         building_id: 1,
-        createdAt: new Date(),
-        updatedAt: new Date()
+        created_at: new Date(),
+        updated_at: new Date()
       },
       {
         id: 2,
         flat_number: 'A-102',
         building_id: 1,
-        createdAt: new Date(),
-        updatedAt: new Date()
+        created_at: new Date(),
+        updated_at: new Date()
       },
       {
         id: 3,
         flat_number: 'B-201',
         building_id: 2,
-        createdAt: new Date(),
-        updatedAt: new Date()
+        created_at: new Date(),
+        updated_at: new Date()
       }
     ]);
   },
