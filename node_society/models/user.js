@@ -3,6 +3,8 @@
 const bcrypt = require('bcryptjs');
 const { sendMail } = require('../utils/mailer')
 
+const { userEmailUpdated } = require('../utils/mailTemplates');
+
 module.exports = (sequelize, DataTypes) => {
     const User = sequelize.define(
         'User',
@@ -48,40 +50,41 @@ module.exports = (sequelize, DataTypes) => {
 
     User.afterUpdate(async (user) => {
         try {
-            const changedFields = user.changed()
+            const changedFields = user.changed() || []
 
-            // Safety guard
-            if (!Array.isArray(changedFields)) return
+            if (!Array.isArray(changedFields) || changedFields.length === 0) {
+                return
+            }
 
-            /* EMAIL CHANGED */
+            console.log('🔁 User updated fields:', changedFields)
+
+            /* 📧 EMAIL CHANGED */
             if (changedFields.includes('email')) {
-                await sendMail({
+                sendMail({
                     to: user.email,
                     subject: 'Your email was updated',
-                    html: `
-          <p>Hello ${user.name},</p>
-          <p>Your email address was updated successfully.</p>
-        `
-                })
-            }
-
-            /* ROLE CHANGED */
-            if (changedFields.includes('role_id')) {
-                console.log(`🔄 User ${user.id} role changed`)
-                // TODO: audit log / admin notification
-            }
-
-            /* PASSWORD CHANGED */
+                    html: userEmailUpdated({ name: user.name })
+                }).catch(err =>
+                    console.error('Mail error (email change):', err.message)
+                )
+            }/* 🔐 PASSWORD CHANGED */
             if (changedFields.includes('password')) {
-                await sendMail({
+                sendMail({
                     to: user.email,
                     subject: 'Password changed',
                     html: `
-          <p>Hello ${user.name},</p>
-          <p>Your password was changed successfully.</p>
-          <p>If this wasn’t you, please contact support immediately.</p>
-        `
-                })
+            <p>Hello ${user.name},</p>
+            <p>Your password was changed successfully.</p>
+            <p>If this wasn’t you, please contact support immediately.</p>
+          `
+                }).catch(err =>
+                    console.error('Mail error (password):', err.message)
+                )
+            }
+
+            /* 👤 ROLE CHANGED */
+            if (changedFields.includes('role_id')) {
+                console.log(`🔄 User ${user.id} role changed`)
             }
 
         } catch (err) {
